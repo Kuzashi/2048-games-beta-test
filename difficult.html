@@ -1,0 +1,411 @@
+<!DOCTYPE html
+><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pilih Kesulitan</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap');body {
+
+background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); min-height: 100vh; font-family: 'Orbitron', sans-serif; color: #fff; margin: 0; padding: 20px 0; overflow-x: auto; /* Cegah scroll horizontal / overflow-y: hidden; / cegah scroll vertikal */ }
+
+.container {
+display: flex; 
+flex-direction: column; 
+align-items: center; 
+gap: 20px; padding: 20px; 
+max-width: 1000px; 
+margin: 0 auto; 
+}
+
+.glitch {
+position: relative; 
+display: inline-block; 
+color: #0ff; 
+text-shadow: 0 0 3px #0ff, 0 0 5px #0ff; 
+}
+
+.glitch::before, .glitch::after { 
+  content: attr(data-text); 
+  position: absolute; top: 0; 
+  left: 0; 
+  width: 100%; 
+  overflow: hidden; 
+  color: #f0f; 
+  z-index: -1; 
+  animation: glitchAnim 1s infinite linear alternate-reverse; 
+}
+
+.glitch::after { 
+  color: #0ff; 
+  animation: glitchAnim2 1s infinite linear alternate-reverse; 
+}
+
+@keyframes glitchAnim { 
+  0% { 
+    clip-path: inset(80% 0 0 0); 
+    transform: translate(1px, -1px); 
+  } 
+  20% { 
+    clip-path: inset(10% 0 85% 0); 
+    transform: translate(-2px, 2px); 
+  } 
+  40% { 
+    clip-path: inset(50% 0 30% 0); 
+    transform: translate(-1px, 1px); 
+  } 60% { clip-path: inset(90% 0 5% 0); 
+  transform: translate(1px, 0); 
+  } 80% { clip-path: inset(5% 0 90% 0); 
+  transform: translate(-1px, -1px); 
+  } 100% { clip-path: inset(0 0 100% 0); 
+  transform: translate(0, 2px); 
+  } 
+}
+
+@keyframes glitchAnim2 { 
+  0% { 
+    clip-path: inset(0 0 100% 0); 
+    transform: translate(-1px, 1px); 
+  } 
+  20% { 
+    clip-path: inset(20% 0 60% 0); 
+    transform: translate(1px, -1px); 
+  } 
+  40% { 
+    clip-path: inset(40% 0 40% 0); 
+    transform: translate(2px, 0); 
+  } 
+  60% { 
+    clip-path: inset(60% 0 20% 0); 
+    transform: translate(0, -2px); 
+  } 
+  80% { 
+    clip-path: inset(80% 0 10% 0); 
+    transform: translate(-2px, 1px); 
+  } 
+  100% { 
+    clip-path: inset(100% 0 0 0); 
+    transform: translate(1px, 1px); 
+  } 
+}
+
+@keyframes imgGlitch { 
+  0%, 95%, 100% { 
+    filter: none; 
+    transform: none; 
+  } 
+  96% { 
+    filter: contrast(180%) hue-rotate(10deg); 
+    transform: translate(1px, -1px) scale(1.01); 
+  } 
+  97% { 
+    filter: grayscale(100%) blur(0.5px); 
+    transform: translate(-2px, 2px) rotate(1deg); 
+  } 
+  98% { 
+    filter: none; 
+    transform: none; 
+  } 
+}
+
+img { 
+  animation: imgGlitch 6s infinite; 
+}
+
+h1 { 
+  animation: turunDariAtas 0.8s ease-out forwards; 
+}
+
+#back {
+  width: 380px;
+  padding: 10px 20px;
+  background: transparent;
+  border: 2px solid #0ff;
+  border-radius: 8px;
+  color: #0ff;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 0 10px #0ff;
+  transition: 0.3s;
+  animation: turunDariAtas 0.8s ease-out forwards;
+}
+
+#back:hover {
+  background: rgba(0, 255, 255, 0.2);
+  box-shadow: 0 0 20px #0ff;
+  transform: translateY(-5px);
+}
+
+.difficulty-option {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 90vw;
+  max-width: 600px;
+  height: 120px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 16px;
+  overflow: hidden;
+  border: 2px solid #0ff;
+  margin: 10px auto;
+  cursor: pointer;
+  transition: 0.3s;
+  animation: turunDariAtas 0.8s ease-out forwards;
+  box-shadow: 0 0 15px #0ff;
+}
+
+.difficulty-option:hover {
+  animation: hoverUp 0.3s forwards;
+  box-shadow: 0 0 25px #0ff;
+  background: rgba(0, 255, 255, 0.1);
+}
+
+.difficulty-option img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* gambar biar penuh, tapi tidak grayscale */
+}
+
+.difficulty-option span {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: rgba(0, 255, 255, 0.1);
+  color: #0ff;
+  text-shadow: 0 0 10px #0ff;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 6px 0;
+  z-index: 2;
+  backdrop-filter: blur(4px);
+}
+
+.easy { 
+  border-color: #00ff99; 
+  box-shadow: 0 0 10px #00ff99; 
+}
+
+.standard { 
+  border-color: #ffcc00; 
+  box-shadow: 0 0 10px #ffcc00; 
+}
+
+.expert { 
+  border-color: #ff0044; 
+  box-shadow: 0 0 10px #ff0044; 
+}
+
+.coming { 
+  border-color: white; 
+  box-shadow: 0 0 10px white; 
+}
+
+.coming p {
+  color: #fff;
+  text-shadow: 0 0 15px #fff;
+  font-size: 70px;
+  z-index: 2;
+}
+
+details {
+  animation: turunDariAtas 0.8s forwards;
+}
+
+details:close {
+  animation: naikKeAtas 0.8s forwards;
+}
+
+@keyframes turunDariAtas {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hoverUp {
+  0% {
+    transform: translateY(0);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  100% {
+    transform: translateY(-10px);
+    box-shadow: 0 0 25px #0ff;
+  }
+}
+
+@keyframes turun {
+
+0% { transform: translateY(-50px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+
+.animate-turun { 
+  animation: turun 0.8s; 
+}
+
+.detail { 
+  border: 1px solid #ddd; 
+  padding: 15px; 
+  margin-bottom: 10px; 
+  border-radius: 5px; 
+  cursor: pointer; 
+  transition: background 0.3s; 
+}
+
+.detail {
+background: transparent; 
+color: white; 
+}
+
+.ability:hover {
+  background: #f0f0f0;
+}
+
+.buka { 
+  animation: turun 0.8s forwards; 
+}
+
+/* Style untuk summary */ summary { 
+  cursor: pointer; 
+  padding: 10px; 
+  background: rgba(0, 255, 255, 0.1); 
+  border-radius: 5px; 
+  margin-top: 5px; 
+  transition: all 0.3s; 
+}
+
+summary:hover { 
+  background: rgba(0, 255, 255, 0.2); 
+}
+
+/* Style untuk konten details */ 
+.content { padding: 10px; margin-top: 5px; background: rgba(0, 0, 0, 0.3); border-radius: 5px; }
+
+  </style>
+</head>
+<body> 
+<audio id="bg-music" autoplay loop>
+  <source src="Air Gelap.mp3" type="audio/mp3">
+</audio>
+<p style="color: rgba(255, 255, 255, 0.7); position: absolute; top: 1%; right: -5%; transform: translate(-50%, -50%);">Version: v1.5.0.01.6miJAD</p>
+  <div class="container">
+    <h1 class="glitch" data-text="Pilih Kesulitan">Pilih Kesulitan</h1>
+    <button id="back" class="glitch" data-text="BACK" onclick="back()">BACK</button><div class="detail">
+<div class="difficulty-option easy" onclick="selectDifficulty('easy')">
+  <img src="ikon daun.jpg" alt="Easy Mode">
+  <span class="glitch" data-text="Easy">Easy</span>
+</div>
+<details>
+  <summary>Detail Tentang Mode Ini...</summary>
+  <p id="p">Easy mode, yeah mode yang mudah.<br>
+  Mode ini akan memberikan pengalaman bermain yang<br>
+  lebih simple ataupun tidak tergesa gesa.</p>
+  </details>
+</div>
+
+<div class="detail">
+<div class="difficulty-option standard" onclick="selectDifficulty('standard')">
+  <img src="ikon petir.jpg" alt="Standard Mode">
+  <span class="glitch" data-text="Standard">Standard</span>
+</div>
+<details>
+  <summary>Detail Tentang Mode ini...</summary>
+  <p id="p"> Mode kali ini menurutku engga susah, engga mudah ya.. seimbang lah.<br>
+  Tile yang muncul bisa satu atau dua ya, pakai strategi aja ini. Btw, kecilkan suara ponsel, terkadang ada suara petir kuat, hehe.</p>
+</details>
+</div>
+
+<div class="detail">
+<div class="difficulty-option expert" onclick="selectDifficulty('expert')">
+  <img src="ikon api.jpg" alt="Expert Mode">
+  <span class="glitch" data-text="Expert">Expert</span>
+</div>
+<details>
+  <summary>Detail Tentang Mode ini...</summary>
+  <p id="p">Mode ini gak punya suasana yang mencekam, namun aku gak yakin kalian bisa tamat...<br>
+  Tile yang muncul bisa satu, dua, bahkan tiga, dan kalian bakalan dipaksa bermain dengan tile tinggi. Kalau kalian pakai strategi, ini bakalan mudah kok. Ya kan?</p>
+</details>
+</div>
+
+<div class="detail">
+<div class="difficulty-option coming" onclick="selectDifficulty('coming')">
+  <p class="glitch" data-text="?????????????">?????????????</p>
+  <span class="glitch" data-text="Coming soon">Coming soon</span>
+</div>
+<details>
+  <summary>????????????</summary>
+  <p id="p">????????????</p>
+</details>
+</div>
+
+  </div>  <div class="detail">
+    <div class="difficulty-option musik" onclick="selectDifficulty('musik')">
+      <img src="ikon musik.jpg" alt="Foto-eror">
+      <span class="glitch" data-text="Music Room">Music Room</span>
+    </div>
+    <details>
+      <summary>Detail Selengkapnya..</summary>
+      <p id="p">Nikmati musik sesuai saran kami, dan kami juga memasuki musik, atau ambien yang yang kami gunakan. Rileks-lah, terima kasih sudah bermain :D</p>
+    </details>
+  </div>  
+  <script>
+    const naudio = new Audio("efekTekan.mp3");
+
+    function efekTekan() {
+      naudio.currentTime = 0;
+      naudio.volume = 1;
+      naudio.play();
+    }
+
+    function back() {
+      efekTekan();
+      setTimeout(() => {
+        location.replace("menu.html");
+      }, 300); // kasih delay sedikit biar efek suara terasa
+    }
+
+    function selectDifficulty(difficulty) {
+      efekTekan();
+      const pages = {
+        easy: "easy.html",
+        standard: "standar.html",
+        expert: "expert.html",
+        coming: "coming.html",
+        musik: "music.html"
+      };
+      setTimeout(() => {
+        location.replace(pages[difficulty]);
+      }, 300);
+    }
+    
+    const details = document.querySelectorAll("details");
+
+details.forEach(detail => {
+  detail.addEventListener("toggle", () => {
+    const content = detail.querySelector("p");
+    if (detail.open) {
+      content.classList.remove("animate-turun");
+      void content.offsetWidth; // trigger ulang
+      content.classList.add("animate-turun");
+    }
+  });
+});
+
+function addMultiEventListener(element, events, handler) {
+  events.forEach(event => {
+    element.addEventListener(event, handler);
+  });
+}
+
+document.querySelectorAll("summary").forEach(summary => {
+  addMultiEventListener(summary, ["click", "touchend", "keydown"], () => {
+    efekTekan();
+  });
+});
+
+  </script></body>
+</html>

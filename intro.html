@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      margin: 0;
+      background: black;
+    }
+
+    #preloader {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    #preloader video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Game intro</title>
+</head>
+<body>
+
+  <div id="preloader">
+    <video id="intro-video" src="splash.mp4" autoplay muted></video>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const video = document.getElementById("intro-video");
+
+      // Kalau video selesai, pindah halaman
+      video.addEventListener("ended", function () {
+        location.replace("login.html");
+      });
+
+      // Safety timeout kalau video ngadat
+      setTimeout(() => {
+        location.replace("login.html");
+      }, 6000); // Jaga-jaga, maksimal 6 detik
+    });
+  </script>
+
+</body>
+</html>

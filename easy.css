@@ -1,0 +1,353 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: url("latar daun.jpg");
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1; /* tetap dibelakang semua elemen lain */
+}
+
+#rubelDisplay {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #f5e1da;
+  color: #5a2a27;
+  font-weight: bold;
+  padding: 10px 16px;
+  border-radius: 12px;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+  font-family: 'Courier New', monospace;
+  font-size: 18px;
+  z-index: 9999;
+}
+
+#rubelContainer {
+  background-color: #f0e6d2;
+  color: #5e4b2c;
+  font-weight: bold;
+  padding: 10px 20px;
+  font-size: 18px;
+  border-radius: 12px;
+  width: fit-content;
+  margin: 10px auto;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+}
+
+
+
+h1 {
+  font-size: 48px;
+  font-weight: bold;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #0A2472; /* Biru tua untuk kontras yang pas */
+  text-shadow: 2px 2px 10px rgba(0, 0, 255, 0.3); /* Bayangan biru lembut */
+  position: absolute;
+  top: 6%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 20px;
+  background-color: rgba(173, 216, 230, 0.9); /* Biru pastel lembut */
+  border-radius: 10px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 255, 0.4); /* Efek cahaya biru */
+}
+
+#make {
+  color: white;
+  position: absolute;
+  top: 95%;
+  left: 33%;
+  transform: translate(-95, -33);
+}
+
+#game-container {
+  box-shadow: 0px 4px 6px rgba(0, 0, 0.2);
+    position: relative;
+    top: 4%;
+    border: 5px solid #00aaff;
+            border-radius: 10px;
+            padding: 20px;
+            background: linear-gradient(to bottom, #001f3f, #003366);
+            box-shadow: 0 0 15px #00aaff;
+    display: inline-block;
+}
+
+#grid {
+    display: grid;
+            grid-template-columns: repeat(4, 80px);
+            grid-template-rows: repeat(4, 80px);
+            gap: 10px;
+            margin-top: 20px;
+    background-color: none;
+    padding: 5px; /* Sesuaikan padding */
+    border-radius: 10px;
+    position: relative;
+}
+
+.cell {
+      width: 80px;
+            height: 80px;
+            background: #ffaa00;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+            border-radius: 6px;
+            box-shadow: 0 0 10px #ffaa00;
+    transition: transform 0.15s ease-out; /* Perbaiki animasi biar nggak bergetar */
+}
+
+/* Animasi tile baru hanya untuk yang benar-benar baru */
+@keyframes newTile{
+    from {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.new-tile {
+    animation: newTile 0.30s ease-out;
+}
+
+.tile {
+    position: absolute;
+    width: 100px; /* Sesuai ukuran grid */
+    height: 100px;
+    line-height: 100px;
+    font-size: 24px;
+    text-align: center;
+    background: #eee4da;
+    transition: transform 0.2s ease-in-out;
+}
+
+.tile.merged {
+    animation: mergeAnimation 0.2s ease-in-out;
+}
+
+@keyframes appearAnimation {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.tile.new {
+    animation: appearAnimation 0.2s ease-in-out;
+}
+
+/* Warna angka */
+.cell[data-value="2"] { background: #EEE4DA; color: #776e65; }
+.cell[data-value="4"] { background: #ede0c8; color: #776e65; }
+.cell[data-value="8"] { background: #f2b179; color: white; }
+.cell[data-value="16"] { background: #f59563; color: white; }
+.cell[data-value="32"] { background: #f67c5f; color: white; }
+.cell[data-value="64"] { background: #f65e3b; color: white; }
+.cell[data-value="128"] { background: #edcf72; color: white; }
+.cell[data-value="256"] { background: #edcc61; color: white; }
+.cell[data-value="512"] { background: #edc850; color: white; }
+.cell[data-value="1024"] { background: #edc53f; color: white; }
+.cell[data-value="2048"] { background: #edc22e; color: white; }
+
+#game-over {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    font-size: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    border-radius: 10px;
+    z-index: 100;
+}
+
+button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 18px;
+    border: none;
+    background: #8f7a66;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background: #776e65;
+}
+
+#settings-menu {
+    position: absolute; 
+    bottom: 20px; /* Sesuaikan biar muncul di luar panel */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999; /* Pastikan tombolnya ada di atas */
+    background-color: rgba(0, 0, 0, 0.7); /* Biar lebih terlihat */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button {
+    padding: 10px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+#musicBtn {
+  position: absolute;
+  top: 17%;
+  left: 75%;
+  transform: translate(-50, -50);
+  margin: 5px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+}
+
+#restartBtn {
+    position: absolute;
+left: 35%;
+}
+#kembali {
+    position: absolute;
+left: 29%;
+color: black;
+}
+
+#balik {
+    position: absolute;
+    left: 18%;
+}
+
+#restartBtn, 
+#kembali, 
+#balik:hover {
+    background-color: lightseagreen;
+}
+
+#kembali {
+    top: 40%;
+    background-color: cyan;
+}
+
+#restartBtn {
+    top: 20%;
+    background-color: seagreen;
+}
+
+#balik {
+    top: 60%;
+    background-color: orangered;
+}
+
+#score {
+  color: white;
+  position: absolute;
+  top: 88%;
+}
+
+#abilities-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    position: absolute;
+    top: 88%;
+}
+
+.abilities {
+    background-color: rgba(255, 255, 255, 0.3); /* Warna latar belakang semi-transparan */
+    backdrop-filter: blur(5px); /* Efek blur di belakang tombol */
+    color: white;
+    font-size: 18px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.abilities:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.abilities:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+#exit {
+    position: absolute;
+    top: 23%;
+    right: 13%;
+    transform: translateX(50%);
+    background: rgba(255, 255, 255, 0.1);
+    color: #f0f0f0;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 12px 24px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#exit:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateX(50%) scale(1.05);
+}
+
+@keyframes destroy {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0);
+  }
+}
+
+.new-tile {
+  animation: popIn 0.2s ease-in-out;
+}
+
+@keyframes popIn {
+  0% { transform: scale(0.3); opacity: 0.3; }
+  100% { transform: scale(1); opacity: 1; }
+}

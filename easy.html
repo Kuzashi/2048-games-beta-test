@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1024 mode.</title>
+    <link rel="stylesheet" href="easy.css">
+</head>
+<body>
+    <p style="color: rgba(255, 255, 255, 0.7); position: absolute; top: 1%; left: 15%; transform: translate(-50%, -50%);">Version: 1.4.0</p>
+      
+  <canvas id="games"></canvas>
+    <h1>1024 mode.</h1>
+    <p id="make">Made By: Kz.Studio</p>
+      
+    <div id="rubelDisplay">Rubel: 0</div>
+      
+<div id="abilities-container">
+   <button class="abilities" onclick="activateRocket()">🚀 <span id="stock-rocket">0</span></button>
+   <button class="abilities" onclick="activateHorizontal()">↔️ <span id="stock-horizontal">0</span></button>
+   <button class="abilities" onclick="activateVertical()">↕️ <span id="stock-vertical">0</span></button>
+   <button class="abilities" onclick="activateBomb()">💣 <span id="stock-bomb">0</span></button>
+</div>
+
+    <div id="game-container">
+        <div id="grid"></div>
+        
+        <div id="game-over">Game Over! <br>   
+           <button id="restartBtn">🔄 Restart</button>
+           <button id="kembali" onclick="kembali()">Kembali ke Menu</button>
+           <button id="balik" onclick="balik()">Kembali ke pemilihan mode</button>  
+        </div>
+    </div>
+
+    <div id="win-message" style="display: none;">
+    <h2>Selamat! Kamu Menang! 🎉</h2>
+    <button onclick="restartGame()">Main Lagi</button>
+    <button id="kembali" onclick="kembali()">Kembali ke Menu</button>
+    <button id="balik" onclick="balik()">Kembali ke Pemilihan Mode.</button>
+</div>
+
+<div id="score">Blok Tertinggi: 0</div>
+    
+    <audio id="bg-music" loop volume="0.4">
+        <source src="Luar Angkasa.mp3" type="audio/mp3">
+        Browser kamu tidak mendukung elemen audio.
+    </audio>
+    
+    <button id="musicBtn">🔊</button>
+
+  <!-- Tombol Pengaturan -->
+  <button id="exit" onclick="exit()">Exit</button>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyCe0-ejdm1LocFTn3G1HR7Cfcx-sJ__ASI",
+        authDomain: "games-2048-merge.firebaseapp.com",
+        projectId: "games-2048-merge",
+        storageBucket: "games-2048-merge.appspot.com",
+        messagingSenderId: "1026790206719",
+        appId: "1:1026790206719:web:d0ff9d8efabda9d63370ca",
+        measurementId: "G-6WPDV75FQK"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    // Inisialisasi Auth dan Realtime Database
+    const auth = firebase.auth();
+    const db = firebase.database();
+</script>
+
+<script src="easy.js" defer></script>
+</body>
+</html>
+

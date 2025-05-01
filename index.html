@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>2048 Games</title>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <script>
+    function onSubmit(token) {
+      document.getElementById("captcha-form").submit();
+    }
+  </script>
+  <style>
+    body {
+      background-image: linear-gradient(to bottom, #3498db, #2ecc71);
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .captcha-container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    #kotakPesan {
+      width: 90%;
+      max-width: 300px;
+      margin: 15px auto;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      border-radius: 5px;
+      text-align: center;
+    }
+    #pesan {
+      font-size: 14px;
+      color: #333;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <div class="captcha-container">
+    <form id="captcha-form" action="intro.html">
+      <div class="g-recaptcha" data-sitekey="6Le3PxsrAAAAABowbiaZ1WWUnkIp3FNnFQ9N_F6F" data-callback="onSubmit"></div>
+      <div id="kotakPesan">
+        <p id="pesan">Tolong bantu kami menciptakan lingkungan permainan<br> yang baik dan aman tanpa ada gangguan DDOS</p>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

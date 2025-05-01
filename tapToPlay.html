@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tap To Play Games</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      overflow: hidden;
+      font-family: 'Poppins', sans-serif;
+      position: relative;
+      height: 100vh;
+      width: 100vw;
+    }
+    #background-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+    @keyframes breathing {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(0.99);
+        opacity: 0.3;
+      }
+    }
+    .tap-container {
+      position: absolute;
+      top: 80%;
+      left: 4%;
+      transform: translate(-50%, -50%);
+      color: white;
+      text-align: center;
+      font-size: clamp(18px, 5vw, 32px);
+      width: 90%;
+      max-width: 400px;
+      padding: 20px;
+      backdrop-filter: blur(4px);
+      border-radius: 12px;
+      background: none;
+      animation: breathing 3s infinite;
+      min-height: 100px; /* ini yang penting biar stabil */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .welcome {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      text-align: center;
+      color: white;
+      padding: 10px 0;
+      background: rgba(0,0,0,0.2);
+      font-size: clamp(12px, 3vw, 18px);
+    }
+    
+    #progress-bar-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  bottom: 10%;
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+  z-index: 10;
+}
+
+#progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  transition: width 0.5s ease;
+}
+
+  </style>
+</head>
+<body>
+
+<div class="welcome">Selamat Datang Di Game 2048!</div>
+
+<div id="progress-bar-container">
+  <div id="progress-bar"></div>
+</div>
+
+<video id="background-video" autoplay loop muted>
+  <source src="latarShiroko.mp4" type="video/mp4">
+</video>
+
+<audio id="bg-music" loop>
+  <source src="Chill HipHop Live Stream.mp3" type="audio/mp3">
+</audio>
+
+<div id="tap" class="tap-container">Tap To Play Games</div>
+
+<script>
+  const bgMusic = document.getElementById("bg-music");
+
+  function playMusic() {
+    bgMusic.play().then(() => {
+      console.log("Musik diputar otomatis setelah interaksi.");
+      document.removeEventListener("click", playMusic);
+      document.removeEventListener("keydown", playMusic);
+      document.removeEventListener("touchstart", playMusic);
+    }).catch(err => {
+      console.error("Gagal memutar musik:", err);
+    });
+  }
+
+  document.addEventListener("click", playMusic);
+  document.addEventListener("keydown", playMusic);
+  document.addEventListener("touchstart", playMusic);
+
+  const loadingTexts = [
+    "Memuat halaman...",
+    "Memuat lagu latar...",
+    "Menghubungkan server...",
+    "Memuat aset game...",
+    "Menyusun komponen UI...",
+    "Menyiapkan profil pemain...",
+    "Membuka dunia game...",
+    "Hampir selesai...",
+    "Finalisasi sistem...",
+    "Masuk permainan..."
+  ];
+
+  function loadGame() {
+  document.body.addEventListener("touchend", function handler() {
+    console.log("Tunggu sebentar!");
+
+    const progressBar = document.getElementById("progress-bar");
+    progressBar.style.width = "0%"; // reset dulu
+
+    let currentIndex = 0;
+    let progress = 0;
+
+    function nextLoadingStep() {
+      if (currentIndex < loadingTexts.length) {
+        document.getElementById("tap").innerHTML = loadingTexts[currentIndex];
+        currentIndex++;
+
+        // Tambah progress tiap loading step
+        progress += Math.random() * 10 + 8; // random 8%-18% per step
+        if (progress > 95) progress = 95; // biar gak full duluan
+        progressBar.style.width = progress + "%";
+
+        setTimeout(nextLoadingStep, 1000 + Math.random() * 1500); 
+      } else {
+        // Setelah semua loading teks selesai
+        setTimeout(() => {
+          progressBar.style.width = "100%"; // full 100% sebelum pindah
+          
+          if (Math.random() >= 0.97) { // 3% error
+            alert("Koneksi terputus, coba lagi nanti");
+            document.getElementById("tap").innerHTML = "Tap To Play Games";
+            progressBar.style.width = "0%"; // reset
+            document.body.removeEventListener("touchend", handler);
+            loadGame();
+          } else {
+            location.replace("menu.html");
+          }
+        }, 1000);
+      }
+    }
+
+    nextLoadingStep();
+    document.body.removeEventListener("touchend", handler);
+  });
+}
+
+  loadGame();
+</script>
+
+</body>
+</html>

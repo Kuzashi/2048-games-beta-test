@@ -1,0 +1,180 @@
+/* Reset tampilan bawaan browser */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Background image */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: url('pemandangan.jpg') no-repeat center center/cover;
+    overflow: hidden;
+}
+
+h2 {
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #f0f0f0;
+    text-align: center;
+    line-height: 1.1;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
+    white-space: pre-line;
+}
+
+/* Container tombol */
+#kontainerMasuk {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    background: rgba(40, 40, 60, 0.3);
+    backdrop-filter: blur(12px);
+    padding: 40px;
+    margin: 0;
+    width: 80vw;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+}
+
+/* Gaya tombol */
+button {
+    width: 77vw;
+    max-width: 300px;
+    padding: 14px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #f0f0f0;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Hover */
+button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
+/* Saat ditekan */
+button:active {
+    transform: scale(0.95);
+}
+
+/* Responsif */
+@media (max-width: 500px) {
+    button {
+        width: 80vw;
+        font-size: 16px;
+    }
+}
+
+#out {
+    background-color: red;
+    color: white;
+}
+
+#follow {
+    background-color: lightgreen;
+    color: white;
+}
+
+#loading-spinner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Animasi muter */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+#settingsBtn {
+    position: absolute;
+    bottom: 5%;
+    right: 50%;
+    transform: translateX(50%);
+    background: rgba(255, 255, 255, 0.1);
+    color: #f0f0f0;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 12px 24px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#settingsBtn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateX(50%) scale(1.05);
+}
+
+/* Kontainer Pengaturan */
+.settings-container {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    height: 400px;
+    width: auto; /* Aku tambahin width dikit supaya lebih stabil */
+    overflow-y: auto;
+    overflow-x: hidden;
+    transform: translate(-50%, -50%);
+    background: rgba(30, 30, 50, 0.85);
+    backdrop-filter: blur(8px);
+    color: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+    text-align: center;
+}
+
+/* Scrollbar styling hanya untuk .settings-container */
+.settings-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.settings-container::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+}
+
+.settings-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Gaya checkbox */
+#bgMusic {
+    margin-top: 10px;
+}

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kerja Sama Dengan Kz.Studio!</title>
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      padding-top: 60px; /* Biar isi gak ketiban nav */
+    }
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background-color: #333;
+      display: flex;
+      justify-content: center;
+      padding: 10px 0;
+      z-index: 1000;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      padding: 8px 12px;
+      border-radius: 5px;
+      transition: background 0.3s;
+    }
+    nav a:hover,
+    nav a.active {
+      background-color: #555;
+    }
+    section {
+      padding: 50px 20px;
+      min-height: 100vh;
+      border-bottom: 1px solid #ccc;
+    }
+    h2 {
+      margin-top: 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <a href="#menu" class="nav-link">Menu</a>
+    <a href="#kerja-sama-media" class="nav-link">Kerja Sama Media Sosial</a>
+    <a href="#kerja-sama-iklan" class="nav-link">Kerja Sama Pengiklanan</a>
+    <a href="#iklan-mereka" class="nav-link">Iklan Kalian</a>
+  </nav>
+
+  <section id="menu">
+    <h2>Menu</h2>
+    <p>Halo Para Player!<br>Selamat datang di halaman kerja sama Kz.Studio!</p>
+  </section>
+
+  <section id="kerja-sama-media">
+    <h2>Kerja Sama Media Sosial</h2>
+    <p>Apakah kalian ingin menjadi penyebar iklan?<br> 
+    Yup, kalian bisa menyebarkan iklan kami!<br>
+    Kalian bisa menyebarkan Game yang kami buat, mereview game dari website kami.<br></p>
+    <details>
+      <summary>Keuntungan</summary>
+      <p>
+        Kalian akan mendapat keuntungan dari pengiklanan kami:<br>
+        - 1.000 view + 25-50 like: 15k<br>
+        - 1.000 view + 50-70 like: 20k (via Dana)<br>
+        - 10.000 view + 75-120 like: 35k<br>
+        - 50.000 view + 125-200 like: 65k<br>
+        - 100.000 view + 200-500 like: 112k<br>
+      </p>
+    </details>
+  </section>
+
+  <section id="kerja-sama-iklan">
+    <h2>Kerja Sama Pengiklanan</h2>
+    <p>Kalian mau mengiklankan produk? Grup chat? Barang? Jasa? Media sosial?<br>
+    Kalian bisa promosi di sini! Kami tidak meminta bayaran, hanya saling mengiklankan saja.<br> Deal?</p>
+  </section>
+
+  <section id="iklan-mereka">
+    <h2>Iklan Kalian</h2>
+    <p>Kalian mau mengiklankan barang secara kompleks?<br>
+    Kita bisa membahasnya secara pribadi.<br>
+    Patokan awal:<br>
+    - Iklan grup chat: 10k per minggu<br>
+    - Iklan barang jualan: 2k + 1% harga barang<br>
+    - Iklan bot: 5k per minggu<br>
+    - Iklan jasa: 5k per 2 minggu<br>
+    (Harus legal ya!)</p>
+  </section>
+
+  <script>
+    // Buat aktifkan menu yang lagi diklik
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', function() {
+        navLinks.forEach(l => l.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+
+</html>

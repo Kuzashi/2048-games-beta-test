@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Player</title>
+  <style>
+    body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #0f0f10, #1a1a1d);
+  color: #f1f1f1;
+  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+#back {
+  position: absolute;
+  border: transparent;
+  background-color: red;
+  width: 81vw;
+  height: auto;
+  top: 80vh;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.thumbnail {
+  width: 280px;
+  height: 280px;
+  background-color: #2a2a2e;
+  border-radius: 24px;
+  margin-bottom: 24px;
+  object-fit: cover;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+  transition: transform 0.3s ease;
+}
+
+.thumbnail:hover {
+  transform: scale(1.1);
+}
+
+.thumbnail:active {
+  transform: scale(1.1);
+}
+
+.song-title {
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 4px;
+  color: #ffffff;
+}
+
+.song-artist {
+  font-size: 16px;
+  color: #bbb;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.progress-bar {
+  width: 90%;
+  appearance: none;
+  height: 6px;
+  border-radius: 3px;
+  background: #444;
+  outline: none;
+  margin: 16px 0;
+}
+
+.progress-bar::-webkit-slider-thumb {
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  background: #f39c12;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.time-info {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  font-size: 12px;
+  color: #aaa;
+}
+
+.controls {
+  display: flex;
+  width: 40px;
+  height: 75px;
+  justify-content: center;
+  gap: 28px;
+  margin-top: 16px;
+}
+
+.controls button {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: none;
+  color: white;
+  font-size: 26px;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 12px;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.controls button:active {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: scale(1.1);
+}
+  </style>
+</head>
+<body>
+
+  <img id="thumb" src="thumb1.jpg" alt="Thumbnail" class="thumbnail">
+  <div class="song-title" id="title">Judul Lagu</div>
+  <div class="song-artist" id="artist">Artis</div>
+
+  <input type="range" id="seekbar" class="progress-bar" min="0" max="100" value="0">
+  <div class="time-info">
+    <span id="currentTime">0:00</span>
+    <span id="duration">0:00</span>
+  </div>
+
+  <div class="controls">
+    <button onclick="shuffle()">🔀</button>
+    <button onclick="prev()">⏮</button>
+    <button onclick="togglePlay()">⏯</button>
+    <button onclick="next()">⏭</button>
+    <button id="repeat" onclick="repeat()">🔁</button>
+    <button id="back" onclick="kembali()">⟨⟨⟨ Kembali ke List Musik</button>
+  </div>
+
+  <audio id="audio"></audio>
+
+  <script>
+  const efekAudio = new Audio("efekTekan.mp3");
+
+function efekTekan() {
+  let sound = efekAudio;
+  sound.currentTime = 0;
+  sound.volume = 1;
+  sound.play();
+}
+
+function kembali() {
+  efekTekan();
+  setTimeout(function() {
+    location.replace("music.html");
+  }, 500);
+}
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const index = parseInt(urlParams.get('index')) || 0;
+
+    const songs = [
+      {
+        title: "Stay With Me — Matsubara (lofi)",
+        artist: "Miki Matsubara",
+        file: "Miki Matsubara Lofi.mp3",
+        thumb: "miki lofi thumbnail.jpg"
+      },
+      {
+        title: "Pixels — brianjcb",
+        artist: "brianjcb",
+        file: "Pixels.mp3",
+        thumb: "pixel.jpg"
+      },
+      {
+        title: "Air Gelap — Hari Senang",
+        artist: "Hari Senang",
+        file: "Air Gelap.mp3",
+        thumb: "air gelap.jpg"
+      },
+      {
+        title: "Luar Angkasa — Hari Senang",
+        artist: "Hari Senang",
+        file: "Luar Angkasa.mp3",
+        thumb: "air gelap.jpg",
+      },
+      {
+        title: "Ты и Я — Xcho(you and I)",
+        artist: "Xcho",
+        file: "Ты и Я.mp3",
+        thumb: "Ты и я thumb.jpg"
+      }
+    ];
+
+    let song = songs[index];
+    const audio = document.getElementById('audio');
+    const title = document.getElementById('title');
+    const artist = document.getElementById('artist');
+    const thumb = document.getElementById('thumb');
+
+    title.textContent = song.title;
+    artist.textContent = song.artist;
+    thumb.src = song.thumb;
+    audio.src = song.file;
+
+    // Fungsi tombol kontrol (kosong dulu)
+    function togglePlay() {
+      efekTekan();
+      if (audio.paused) {
+        audio.play();
+      } else {
+        audio.pause();
+      }
+    }
+
+    function next() {
+      efekTekan();
+  const nextIndex = (index + 1) % songs.length;
+   location.replace(`control.html?index=${nextIndex}`);
+}
+
+function prev() {
+  efekTekan();
+  const prevIndex = (index - 1 + songs.length) % songs.length;
+  location.replace(`control.html?index=${prevIndex}`);
+}
+
+function shuffle() {
+  efekTekan();
+  const rand = Math.floor(Math.random() * songs.length);
+  location.replace(`control.html?index=${rand}`);
+}
+
+let isRepeat = false;
+
+function repeat() {
+  efekTekan();
+  isRepeat = !isRepeat;
+  document.getElementById("repeat").innerHTML = isRepeat ? "🔂" : "🔁";
+}
+
+// Cek saat lagu selesai
+audio.addEventListener("ended", () => {
+  if (isRepeat) {
+    audio.currentTime = 0;
+    audio.play();
+  }
+});
+
+    // Update durasi dan waktu berjalan
+    const seekbar = document.getElementById("seekbar");
+    const currentTime = document.getElementById("currentTime");
+    const duration = document.getElementById("duration");
+
+    audio.addEventListener("loadedmetadata", () => {
+      seekbar.max = audio.duration;
+      duration.textContent = formatTime(audio.duration);
+    });
+
+    audio.addEventListener("timeupdate", () => {
+      seekbar.value = audio.currentTime;
+      currentTime.textContent = formatTime(audio.currentTime);
+    });
+
+    seekbar.addEventListener("input", () => {
+      audio.currentTime = seekbar.value;
+    });
+
+    function formatTime(time) {
+      const minutes = Math.floor(time / 60);
+      const seconds = Math.floor(time % 60).toString().padStart(2, "0");
+      return `${minutes}:${seconds}`;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Daftar Lagu</title>
+  <style>
+    :root {
+      --bg-color: #121212;
+      --text-color: white;
+      --list-bg: #292932;
+      --list-hover: #3c3c4a;
+    }
+
+    body.light {
+      --bg-color: #f0f0f0;
+      --text-color: #121212;
+      --list-bg: #ffffff;
+      --list-hover: #e0e0e0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      padding: 20px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    #theme-toggle {
+      padding: 6px 12px;
+      background-color: #444;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    #search {
+      padding: 8px;
+      width: 60%;
+      border-radius: 8px;
+      border: none;
+    }
+
+    ul#song-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    ul#song-list li {
+      display: flex;
+      align-items: center;
+      background-color: var(--list-bg);
+      cursor: pointer;
+      transition: background-color 0.3s;
+      border-top: 1px solid #444;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    ul#song-list li:hover {
+      background-color: var(--list-hover);
+    }
+
+    .song-image {
+      width: 60px;
+      height: 60px;
+      border-radius: 8px;
+      margin-right: 16px;
+      object-fit: cover;
+    }
+
+    .song-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    #kembali {
+      position: fixed;
+      top: 80vh;
+      left: 10vw;
+      background-color: red;
+      border: transparent;
+      width: 80vw;
+      height: 40px;
+      color: white;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Daftar Lagu</h1>
+  <div class="controls">
+    <input type="text" id="search" placeholder="Cari lagu atau artis...">
+    <button id="theme-toggle">Ganti Tema</button>
+  </div>
+
+  <ul id="song-list"></ul>
+  <button id="kembali" onclick="kembali()">⟨⟨⟨ Kembali</button>
+
+  <script>
+  const efekAudio = new Audio("efekTekan.mp3");
+
+function efekTekan() {
+  let sound = efekAudio;
+  sound.currentTime = 0;
+  sound.volume = 1;
+  sound.play();
+}
+
+    const songs = [
+      {
+        title: "Stay With Me — Matsubara (lofi)",
+        artist: "Miki Matsubara",
+        file: "Miki Matsubara Lofi.mp3",
+        thumb: "miki lofi thumbnail.jpg",
+        duration: 168
+      },
+      {
+        title: "Pixels — brianjcb",
+        artist: "brianjcb",
+        file: "Pixels.mp3",
+        thumb: "pixel.jpg",
+        duration: 159
+      },
+      {
+        title: "Air Gelap — Hari Senang",
+        artist: "Hari Senang",
+        file: "Air Gelap.mp3",
+        thumb: "air gelap.jpg",
+        duration: 63
+      },
+      {
+        title: "Luar Angkasa — Hari Senang",
+        artist: "Hari Senang",
+        file: "Luar Angkasa.mp3",
+        thumb: "air gelap.jpg",
+        duration: 47
+      },
+      {
+        title: "Ты и Я — Xcho(you and I)",
+        artist: "Xcho",
+        file: "Ты и Я.mp3",
+        thumb: "Ты и я thumb.jpg",
+        duration: 148
+      }
+    ];
+
+    const list = document.getElementById('song-list');
+    const search = document.getElementById('search');
+    const themeToggle = document.getElementById('theme-toggle');
+
+    function renderList(filter = '') {
+      list.innerHTML = '';
+      songs.forEach((song, index) => {
+        if (song.title.toLowerCase().includes(filter.toLowerCase()) || song.artist.toLowerCase().includes(filter.toLowerCase())) {
+          const li = document.createElement('li');
+
+          const img = document.createElement('img');
+          img.src = song.thumb || "default.jpg";
+          img.className = "song-image";
+
+          const minutes = Math.floor(song.duration / 60);
+          const seconds = String(song.duration % 60).padStart(2, '0');
+
+          const info = document.createElement('div');
+          info.className = "song-info";
+          info.innerHTML = `<strong>${song.title}</strong><span>${song.artist} ${minutes}:${seconds}</span>`;
+
+          li.appendChild(img);
+          li.appendChild(info);
+
+          li.addEventListener('click', () => {
+            efekTekan();
+            location.replace(`control.html?index=${index}`);
+          });
+
+          list.appendChild(li);
+        }
+      });
+    }
+
+    search.addEventListener('input', () => {
+      renderList(search.value);
+    });
+
+    themeToggle.addEventListener('click', () => {
+      efekTekan();
+      document.body.classList.toggle('light');
+    });
+
+    function kembali() {
+      efekTekan();
+      location.replace("difficult.html");
+    }
+
+    renderList();
+  </script>
+
+</body>
+</html>

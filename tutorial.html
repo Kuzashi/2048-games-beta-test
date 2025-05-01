@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tutorial/petunjuk</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(145deg, #f5f7fa, #e4e7ec);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    #container {
+      background: white;
+      width: 90vw;
+      max-width: 600px;
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      margin: 40px auto 20px auto;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #333;
+    }
+
+    details {
+      background: #fafafa;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 15px 20px;
+      margin: 15px 0;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+    }
+
+    details:hover {
+      background: #f0f8ff;
+      transform: scale(1.01);
+    }
+
+    summary {
+      font-size: 1.2em;
+      font-weight: 600;
+      color: #444;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    summary:hover {
+      color: #0077cc;
+    }
+
+    p {
+      margin-top: 10px;
+      font-size: 0.95em;
+      color: #555;
+    }
+
+    .thanks {
+      background-color: #e0f7fa;
+      border-left: 4px solid #00acc1;
+      padding: 10px 15px;
+      border-radius: 6px;
+    }
+
+    #goBack {
+      position: fixed;
+      top: 5%;
+      left: 8%;
+      transform: translate(-50%, -50%);
+      display: block;
+      margin: 25px auto 0;
+      width: 30%;
+      height: 42px;
+      background: linear-gradient(to right, #8f7a66, #a08971);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 1em;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    #goBack:hover {
+      transform: scale(0.95);
+      box-shadow: none;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #f9f9f9;
+      color: #555;
+      font-size: 0.9em;
+      border-top: 1px solid #ccc;
+    }
+
+    .whatsapp-link {
+      display: inline-block;
+      margin: 8px 0;
+      color: #25d366;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .whatsapp-link:hover {
+      text-decoration: underline;
+      color: #1ebe57;
+    }
+
+    .credits {
+      margin-top: 10px;
+      font-style: italic;
+    }
+    
+    #wa {
+      color: green;
+    }
+    
+    #tt {
+      color: black;
+    }
+    
+    @keyframes turun {
+  0% {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-turun {
+  animation: turun 0.8s;
+}
+
+.buka {
+  animation: turun 0.8s forwards;
+}
+
+@keyframes keluar {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+.animate-keluar {
+  animation: keluar 0.5s forwards;
+}
+
+  </style>
+</head>
+<body>
+  
+    <audio id="bg-music" loop>
+    <source src="Air Gelap.mp3" type="audio/mpeg">
+    Browser kamu tidak mendukung elemen audio.
+  </audio>
+  
+  <p style="color: rgba(0, 0, 0, 0.7); position: absolute; top: 1%; right: 0%; transform: translate(-50%, -50%);">Version: 1.4.0</p>
+  <div id="container" class="animate-turun">
+    <h1>Tutorial and FAQ</h1>
+
+    <details>
+      <summary>Apa ini?</summary>
+      <p>Ini Adalah Permainan 2048 Games By Kz.Studio, Bukan Hal Lain Seperti Bug, Virus, Judi, DLL.</p>
+    </details>
+
+    <details>
+      <summary>Apakah Ini Aman?</summary>
+      <p>Ya, Kami Menghargai Privasi Para User Yang Membuka Website Ini, Kami Tidak Akan Meminta Informasi Pribadi Apapun.</p>
+    </details>
+
+    <details>
+      <summary>Bagaimana Cara Bermainnya?</summary>
+      <p>Sentuh dan Geser Layar Ke Arah Kanan, Kiri, Atas, Atau Bawah Untuk Menggerakkan Atau Menggabungkan Tile.</p>
+    </details>
+
+    <details>
+      <summary>Apa Tujuan Permainannya?</summary>
+      <p>Kalian Harus Mencapai Tile Tertentu Di Mode Tersebut, Contoh: Easy Mode: Tile 1024, Standard Mode: Tile 2048, Expert Mode: Tile 5096.</p>
+    </details>
+
+    <details>
+      <summary>Gunannya Ada Kotak?</summary>
+      <p>Kalian Bisa Menggabungkan Kotak Kotak Tersebut Dengan Cara Menggeser Layar Dari Ponsel Kalian, Jika Kotak Dengan Nilai Yang Sama Digeserkan Ke Arah Yang Bisa Membuat Tile Itu Bergabung, Maka Tile Itu Akan Bergabung Menjadi Angka lipatannya (Contoh: 2 + 2 = 4 (gak mungkin 12🗿)).</p>
+    </details>
+    
+    <details>
+      <summary>Kz.Studio Media Social</summary>
+      <ol>
+        <li><a id="wa" href="https://whatsapp.com/channel/0029VbAjPZz7T8bRRmhy2G0M">Link Saluran Whatsapp</a></li>
+        <li><a id="tt" href="https://www.tiktok.com/@kz.studio.ofc?_t=ZS-8vPIYWisomG&_r=1">Link Saluran Tik Tok</a></li>
+      </ol>
+    </details>
+    <details>
+      <summary>Special Thanks</summary>
+       <div class="thanks">
+        <ol>
+          <li>Open AI</li>
+          <li>Alina Mika</li>
+          <li>What'sapp</li>
+          <li>Git Hub</li>
+          <li>Google</li>
+          <li>Chroom</li>
+          <li>reCaptha Google</li>
+        </ol>
+      </div>
+    </details>
+    
+    <button id="goBack" onclick="back()">⟨⟨⟨ Back</button>
+  </div>
+  
+  <footer>
+    <p>Follow our developer channel</p>
+    <a href="https://whatsapp.com/channel/0029VbAjPZz7T8bRRmhy2G0M", "_blank">Follow</a>
+    <p class="credits">Created by Kz.Studio, Mika(by Open AI), and team. 2025</p>
+    <p>&copy; Kz.Studio Copyright dilindungi undang-undang</p>
+  </footer>
+
+  <script>
+  function back() {
+    location.replace("menu.html");
+  }
+
+  // Animasi ketika halaman dibuka
+  window.addEventListener("load", () => {
+    const container = document.getElementById("container");
+    container.classList.remove("animate-turun"); // Reset dulu
+    void container.offsetWidth; // Trigger reflow
+    container.classList.add("animate-turun");
+  });
+
+const details = document.querySelectorAll("details");
+
+details.forEach(detail => {
+  detail.addEventListener("toggle", () => {
+    const content = detail.querySelector("p");
+    if (detail.open) {
+      content.classList.remove("animate-turun");
+      void content.offsetWidth; // trigger ulang
+      content.classList.add("animate-turun");
+    }
+  });
+});
+
+const detailsList = document.querySelectorAll("details");
+
+  detailsList.forEach(detail => {
+    const summary = detail.querySelector("summary");
+
+    summary.addEventListener("click", e => {
+      e.preventDefault();
+
+      // Kalau sudah terbuka, kita tutup manual pakai animasi
+      if (detail.open) {
+        const content = detail.querySelector("ol, .thanks");
+
+        if (content) {
+          content.classList.remove("animate-turun");
+          content.classList.add("animate-keluar");
+
+          setTimeout(() => {
+            detail.removeAttribute("open");
+            content.classList.remove("animate-keluar");
+          }, 500); // waktu animasi keluar
+        } else {
+          detail.removeAttribute("open");
+        }
+      } else {
+        // Kalau ditutup, langsung buka dan kasih animasi masuk
+        detail.setAttribute("open", true);
+        const content = detail.querySelector("ol, .thanks");
+
+        if (content) {
+          content.classList.remove("animate-keluar");
+          void content.offsetWidth;
+          content.classList.add("animate-turun");
+        }
+      }
+    });
+  });
+
+</script>
+</body>
+</html>

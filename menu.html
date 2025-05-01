@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="menu.css">
+  <title>Menu Game</title>
+</head>
+
+<body>
+  <!-- Audio Background -->
+  <audio id="bg-music" loop>
+    <source src="Air Gelap.mp3" type="audio/mpeg">
+    Browser kamu tidak mendukung elemen audio.
+  </audio>
+  
+  <h2>SELAMAT DATANG DI 2048 Games!<br>
+  Enjoy :3</h2>
+  <p style="position: absolute; top: 3%; left: 3%; color: rgba(256, 256, 256, 0.6)"><small>Version: v1.5.0.01.6miJAD</small></p>
+  <p style="position: absolute; top: 97%; left: 17%; color: rgba(256, 256, 256, 0.6)"><small>Made By: Kz.Studio</small></p>
+  <p style="position: absolute; top: 97%; left: 46%; color: rgba(256, 256, 256, 0.6)"><small>and thanks for Alina Mika</small></p>
+
+<div id="loading-spinner" style="display: none;">
+  <div class="spinner"></div>
+</div>
+
+  <div id="kontainerMasuk">
+    <button id="masuk" onclick="openLogin()">▶️ Play Games</button>
+    <button id="keluar" onclick="exit()">🚪 Exit</button>
+    <button id="kontak" onclick="openWa()">📢 Report and ratting ★</button>
+    <button id="tutorial" onclick="tutorial()">? Tutorial/petunjuk</button>
+    <button id="shop" onclick="shop()">🛒 Shop</button>
+  </div>
+
+  <!-- Kontainer Pengaturan -->
+  <div id="settingsContainer" class="settings-container">
+    <button onclick="toggleSettings()">Close Settings</button>
+    <label for="bgMusic">Background Music: </label>
+    <input style="margin-bottom: 5px;" type="checkbox" id="bgMusic" onchange="toggleMusic()">
+    <p><br></p>
+    <p><br></p>
+    <p>dukung kami dengan donasi.<br> Dana:<br> 0813-6170-5396</p>
+    <p><br></p>
+    <p><br></p>
+    <p><br></p>
+    <p>Follow Kz.Studio Channel in WhatsApp</p>
+    <button id="follow" onclick="follow()">Follow the Channel</button>
+    <p><br></p>
+    <p><br></p>
+    <p><br></p>
+    <p>Lihat Credit Tim Kz.Studio</p>
+    <button onclick="credit()">Credit Crew</button>
+    <p><br></p>
+    <button id="out" onclick="logOut()">Log-out</button>
+  </div>
+
+  <!-- Tombol Pengaturan -->
+  <button id="settingsBtn" onclick="toggleSettings()">⚙️</button>
+  
+  
+
+  <script src="menu.js"></script>
+</body>
+
+</html>

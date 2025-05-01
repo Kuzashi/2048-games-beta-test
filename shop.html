@@ -1,0 +1,294 @@
+<!DOCTYPE html><html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Shop - 2048 Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #faf8ef;
+      padding: 20px;
+    }
+#shop {
+max-width: 90vw;
+height: auto;
+margin: 5 auto; 
+background:white;
+padding: 20px;
+padding-bottom: 30px; /* Tambahan ruang bawah */ border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.4); 
+  
+}
+
+.ability,
+.detail {
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.detail {
+background: linear-gradient(to right, skyblue, blue, darkblue); color: white;
+}
+
+.ability:active {
+  background: #f0f0f0;
+}
+
+.buka {
+animation: turun 0.8s forwards;
+}
+
+#close {
+position: fixed;
+top: 5%;
+left: 10%;
+transform: translateX(-50%);
+width: 30vw;
+height: 40px;
+background: linear-gradient(to right, #8f7a66, #a08971);
+font-size: 1.1em;
+color: white;
+border: none;
+border-radius: 10px;
+font-weight: bold;
+font-size: 1em;
+box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+cursor: pointer;
+}
+
+#close:active { transform: translate(-50%, 2px); box-shadow: none; }
+
+#rubel-counter {
+  font-size: 1.2em;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+.ability h3 {
+  margin-top: 0;
+  color: #8f7a66;
+}
+.stock {
+  font-size: 0.9em;
+  color: #666;
+}
+
+@keyframes turun { 0% { transform: translateY(-50px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+
+.animate-turun { animation: turun 0.8s; }
+
+/* Style untuk summary */ summary { cursor: pointer; padding: 10px; background: rgba(0, 255, 255, 0.1); border-radius: 5px; margin-top: 5px; transition: all 0.3s; }
+
+summary:hover { background: rgba(0, 255, 255, 0.2); }
+
+@keyframes keluar { 0% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-20px); } }
+
+.animate-keluar { animation: keluar 0.5s forwards; }
+</style>
+</head>
+<body>
+  
+  <audio id="bg-music" autoplay loop>
+  <source src="Air Gelap.mp3" type="audio/mp3">
+</audio>
+
+  <div id="shop">
+    <div id="confirm-popup" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:white; padding:20px; border-radius:10px; box-shadow:0 0 20px rgba(0,0,0,0.4); z-index:1000;">
+  <p id="confirm-text" style="margin-bottom:20px;">Kamu yakin ingin membeli ability ini?</p>
+  <button onclick="confirmPurchase()" style="margin-right:10px; padding:5px 15px; background:#4CAF50; color:white; border:none; border-radius:5px; cursor:pointer;">Iya</button>
+  <button onclick="cancelPurchase()" style="padding:5px 15px; background:#f44336; color:white; border:none; border-radius:5px; cursor:pointer;">Batal</button>
+</div>
+<div id="popup-overlay" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); z-index:999;" onclick="cancelPurchase()"></div>
+    <h1>🛒 Toko Ability</h1>
+    <div id="rubel-counter">Рубль: <span id="rubel-amount">0</span>.</div>
+    <div class="detail">
+    <div class="ability" onclick="buyAbility('rocket')">
+      <h3>🚀 Rocket<br>
+      ———————</h3>
+      <p>Hancurkan 4 tile acak</p>
+      <p>Harga: <strong>300 Rubel</strong></p>
+      <p class="stock">Stok: <span id="stock-rocket">0</span></p>
+    </div>
+    <details>
+  <summary>Penjelasan...</summary>
+  <p id="p">Rocket ini akan menghancurkan 4 tiles<br>
+    secara random dari kotakmu.<br>
+    jika di kotakmu hanya ada 4 atau kurang dari 4 tiles<br>
+    maka ability ini tidak akan bekerja, kenapa?<br>
+    Untuk memastikan ability ini mengerjakan tugasnya<br>
+    secara optimal, sekaligus menghindari bug yang tidak di inginkan</p>
+</details>
+    </div><div class="detail">
+<div class="ability" onclick="buyAbility('horizontal')">
+  <h3>↔️ Horizontal Blast<br>
+  ————————————</h3>
+  <p>Hapus 1 baris horizontal</p>
+  <p>Harga: <strong>260 Rubel</strong></p>
+  <p class="stock">Stok: <span id="stock-horizontal">0</span></p>
+</div>
+<details>
+  <summary>Penjelasan..</summary>
+  <p id="p"><strong>Horizontal Blast!</strong><br>
+  <br>
+  Ability ini akan menghancurkan seluruh kotak horizontal yang kamu pilih, cukup keren benar?</p>
+</details>
+</div>
+
+<div class="detail">
+<div class="ability" onclick="buyAbility('vertical')">
+  <h3>↕️ Vertical Blast</h3>
+  <p>Hapus 1 baris vertikal</p>
+  <p>Harga: <strong>260 Rubel</strong></p>
+  <p class="stock">Stok: <span id="stock-vertical">0</span></p>
+</div>
+<details>
+  <summary>Penjelasan...</summary>
+  <p id="p"><strong>Blast again!</strong><br>
+  <br>
+  Kalau kamu sudah melihat versi Horizontal, maka ini adalah versi dari vertikalnya bung!</p>
+</details>
+</div>
+
+<div class="detail">
+<div class="ability" onclick="buyAbility('bomb')">
+  <h3>💣 Bomb</h3>
+  <p>Hapus 4 kotak area</p>
+  <p>Harga: <strong>200 Rubel</strong></p>
+  <p class="stock">Stok: <span id="stock-bomb">0</span></p>
+</div>
+<details>
+  <summary>Penjelasan...</summary>
+  <p id="p"><strong>BOM!!</strong><br>
+  <br>
+  <i>Seni adalah ledakan!</i><br>
+  <br>
+  Pakai ini jika kamu ingin menghancurkan 4 kotak yang berkumpul di kotakmu itu!</p>
+</details>
+<p><br></p>
+<details>
+  <summary>Peringatan!</summary>
+  <p id="p">Untuk memastikan ability kalian berjalan normal, tolong baca panduan ini<br>
+  Tekan rocket sekali untuk menghancurkan 4 tile secara random, tapi tenang, dia tidak akan menghancurkan tile dengan nilai 128 ke atas agar tidak mempersulit mencapai kemenangan kalian.<br> <br>
+  Ability Bom akan menghancurkan tile 2 kali 2 (4 tile dengan bentuk kotak), namun dia akan menghancurkannya dari sudut kiri atas(bukan sudut kiri papan permainan!), tekan sudut kiri agar tile 2 kali dua hancur.<br> <br>
+  Untuk mencegah bug dan penyia nyiaan ability, kami mengatur sistem agar kalau tile yang ada di papan permainanmu sama atau di bawah 4 tile, maka ability tidak akan bekerja.<br> <br>
+  Pastikan jika kamu menggunakan Horizontal blast, Vertical blast, dan Bomb, jangan sekali kali menekan di kotak kosong yang tidak memiliki tile apapun (maksudnya jika tidak akan ada tile yang terkena ability).<br> <br>
+  Hati-hati saat menggunakan ability, karena bisa saja tile tertinggi-mu ikut hancur (manual).</p>
+</details>
+</div>
+
+<button id="close" onclick="closeShop()">⟨⟨⟨ Kembali</button>
+
+  </div>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyCe0-ejdm1LocFTn3G1HR7Cfcx-sJ__ASI",
+  authDomain: "games-2048-merge.firebaseapp.com",
+  projectId: "games-2048-merge",
+  storageBucket: "games-2048-merge.appspot.com", // diperbaiki
+  messagingSenderId: "1026790206719",
+  appId: "1:1026790206719:web:d0ff9d8efabda9d63370ca",
+  measurementId: "G-6WPDV75FQK"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
+// Inisialisasi Auth dan Realtime Database
+const auth = firebase.auth();
+const db = firebase.database();
+
+let userId = null;
+let rubelAmount = 0;
+
+// Cek autentikasi
+auth.onAuthStateChanged(user => {
+  if (user) {
+    userId = user.uid;
+    const userRef = db.ref("users/" + userId);
+
+    // Ambil data rubel dan stok
+    userRef.on("value", snapshot => {
+      const data = snapshot.val() || {};
+      rubelAmount = data.rubel || 0;
+      document.getElementById("rubel-amount").textContent = rubelAmount;
+      document.getElementById("stock-rocket").textContent = data.stock_rocket || 0;
+      document.getElementById("stock-horizontal").textContent = data.stock_horizontal || 0;
+      document.getElementById("stock-vertical").textContent = data.stock_vertical || 0;
+      document.getElementById("stock-bomb").textContent = data.stock_bomb || 0;
+    });
+  } else {
+    alert("Silakan login terlebih dahulu.");
+    location.replace("login.html");
+  }
+});
+
+let selectedAbility = null;
+
+function buyAbility(type) {
+  selectedAbility = type;
+  document.getElementById("confirm-popup").style.display = "block";
+  document.getElementById("popup-overlay").style.display = "block";
+}
+
+function cancelPurchase() {
+  selectedAbility = null;
+  document.getElementById("confirm-popup").style.display = "none";
+  document.getElementById("popup-overlay").style.display = "none";
+}
+
+function confirmPurchase() {
+  if (!userId || !selectedAbility) return;
+
+  const harga = {
+    rocket: 300,
+    horizontal: 260,
+    vertical: 260,
+    bomb: 200
+  };
+
+  const stokKey = {
+    rocket: "stock_rocket",
+    horizontal: "stock_horizontal",
+    vertical: "stock_vertical",
+    bomb: "stock_bomb"
+  };
+
+  const abilityPrice = harga[selectedAbility];
+  const stokName = stokKey[selectedAbility];
+
+  if (rubelAmount < abilityPrice) {
+    alert("Rubel kamu tidak cukup.");
+    cancelPurchase();
+    return;
+  }
+
+  const userRef = db.ref("users/" + userId);
+  userRef.transaction(user => {
+    if (user) {
+      if (user.rubel >= abilityPrice) {
+        user.rubel -= abilityPrice;
+        user[stokName] = (user[stokName] || 0) + 1;
+      }
+    }
+    return user;
+  }, (error, committed) => {
+    if (error) {
+      console.error("Transaksi gagal:", error);
+    } else if (committed) {
+      console.log("Pembelian berhasil.");
+    }
+    cancelPurchase();
+  });
+}
+
+function closeShop() {
+  window.location.href = "game.html"; // Ganti dengan lokasi file game utamamu
+}
+</script>
+</body>
+</html>
